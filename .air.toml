@@ -1,0 +1,7 @@
+root = "."
+tmp_dir = "tmp"
+
+[build]
+cmd = "gotip build -trimpath -o tmp/app *.go"
+bin = "tmp/app"
+include_ext = ["env", "go"]
