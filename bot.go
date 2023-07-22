@@ -93,3 +93,35 @@ func (bot *Bot) SendMessage(opts map[string]any) (*core.Message, error) {
 func (bot *Bot) SetMyCommands(opts map[string]any) error {
 	return core.SetMyCommands(bot.token, opts)
 }
+
+// opts.callback_query_id {string}
+//
+// opts.text? {string}
+//
+// opts.show_alert? {bool}
+//
+// opts.url? {string}
+//
+// opts.cache_time? {int}
+func (bot *Bot) AnswerCallbackQuery(opts map[string]any) error {
+	return core.AnswerCallbackQuery(bot.token, opts)
+}
+
+// opts.chat_id? {string}
+//
+// opts.message_id? {string}
+//
+// opts.inline_message_id? {string}
+//
+// opts.text {string}
+//
+// opts.parse_mode? {MarkdownV2 | HTML | Markdown}
+//
+// opts.entities? {[]MessageEntity}
+//
+// opts.disable_web_page_preview? {bool}
+//
+// opts.reply_markup {InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply}
+func (bot *Bot) EditMessageText(opts map[string]any) error {
+	return core.EditMessageText(bot.token, opts)
+}

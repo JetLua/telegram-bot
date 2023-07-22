@@ -108,7 +108,7 @@ func SetMyCommands(token string, opts map[string]any) error {
 //
 // opts.reply_markup {InlineKeyboardMarkup | ReplyKeyboardMarkup | ReplyKeyboardRemove | ForceReply}
 func EditMessageText(token string, opts map[string]any) error {
-	body := &Result[bool]{}
+	body := &Result[any]{}
 
 	if _, err := client.R().
 		SetPathParams(map[string]string{
@@ -127,8 +127,33 @@ func EditMessageText(token string, opts map[string]any) error {
 	return nil
 }
 
-func AnswerCallbackQuery() {
+// opts.callback_query_id {string}
+//
+// opts.text? {string}
+//
+// opts.show_alert? {bool}
+//
+// opts.url? {string}
+//
+// opts.cache_time? {int}
+func AnswerCallbackQuery(token string, opts map[string]any) error {
+	body := &Result[bool]{}
 
+	if _, err := client.R().
+		SetPathParams(map[string]string{
+			"token":  token,
+			"method": "answerCallbackQuery",
+		}).
+		SetBody(opts).
+		SetResult(body).
+		SetError(body).
+		Post("/bot{token}/{method}"); err != nil {
+		return err
+	} else if !body.Ok {
+		return errors.New(body.Description)
+	}
+
+	return nil
 }
 
 // opts.chat_id {string | int}

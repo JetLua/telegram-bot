@@ -26,9 +26,10 @@ type Message struct {
 	} `json:"from"`
 
 	Chat *struct {
-		Id                          int    `json:"id"`
-		FirstName                   string `json:"first_name"`
-		Username                    string `json:"username"`
+		Id        int    `json:"id"`
+		FirstName string `json:"first_name"`
+		Username  string `json:"username"`
+		// private | group | supergroup | channel
 		Type                        string `json:"type"`
 		AllMembersAreAdministrators bool   `json:"all_members_are_administrators"`
 	} `json:"chat"`
