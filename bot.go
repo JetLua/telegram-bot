@@ -8,9 +8,9 @@ import (
 )
 
 type Bot struct {
-	token   string
-	Self    *core.User
-	Channel chan *core.Update
+	token string
+	Self  *core.User
+	Ctx   chan *core.Ctx
 }
 
 type BotConfig struct {
@@ -25,8 +25,8 @@ func New(config *BotConfig) *Bot {
 	}
 
 	bot := &Bot{
-		token:   config.Token,
-		Channel: make(chan *core.Update),
+		token: config.Token,
+		Ctx:   make(chan *core.Ctx),
 	}
 
 	if u, err := core.GetMe(config.Token); err != nil {
@@ -45,7 +45,7 @@ func New(config *BotConfig) *Bot {
 				log.Println(err)
 			} else {
 				for _, v := range updates {
-					bot.Channel <- v
+					bot.Ctx <- core.NewCtx(bot.token, v)
 					params["offset"] = v.UpdateId + 1
 				}
 			}

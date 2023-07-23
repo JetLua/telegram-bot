@@ -131,7 +131,7 @@ type InlineKeyboardButton struct {
 }
 
 type InlineKeyboardMarkup struct {
-	InlineKeyboards [][]*InlineKeyboardButton `json:"inline_keyboard"`
+	InlineKeyboard [][]*InlineKeyboardButton `json:"inline_keyboard"`
 }
 
 type CallbackQuery struct {
