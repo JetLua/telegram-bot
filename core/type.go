@@ -1,5 +1,11 @@
 package core
 
+type Ctx struct {
+	token string
+	Msg   *Message
+	Query *CallbackQuery
+}
+
 type Result[T any] struct {
 	Result      T      `json:"result"`
 	Ok          bool   `json:"ok"`
@@ -161,4 +167,16 @@ type MessageEntity struct {
 	User          *User  `json:"user"`
 	Language      string `json:"language"`
 	CustomEmojiId string `json:"custom_emoji_id"`
+}
+
+type Recycle interface {
+	Dispose()
+}
+
+func (this *InlineKeyboardMarkup) Dispose() {
+	for _, rows := range this.InlineKeyboard {
+		for _, btn := range rows {
+			btnPool.Put(btn)
+		}
+	}
 }

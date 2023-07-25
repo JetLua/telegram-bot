@@ -1,11 +1,5 @@
 package core
 
-type Ctx struct {
-	token string
-	Msg   *Message
-	Query *CallbackQuery
-}
-
 func NewCtx(token string, u *Update) *Ctx {
 	ctx := ctxPool.Get().(*Ctx)
 	ctx.token = token
@@ -75,11 +69,7 @@ func (c *Ctx) Reply(text string, opts ...map[string]any) {
 
 	defer func() {
 		if markup != nil {
-			for _, rows := range markup.InlineKeyboard {
-				for _, btn := range rows {
-					btnPool.Put(btn)
-				}
-			}
+			markup.Dispose()
 		}
 	}()
 
