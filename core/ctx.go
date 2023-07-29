@@ -1,5 +1,13 @@
 package core
 
+type Ctx struct {
+	token    string
+	Msg      *Message
+	Query    *CallbackQuery
+	Entities []*MessageEntity
+	Command  chan string
+}
+
 func NewCtx(token string, u *Update) *Ctx {
 	ctx := ctxPool.Get().(*Ctx)
 	ctx.token = token
@@ -103,7 +111,6 @@ func (c *Ctx) Reply(text string, opts ...map[string]any) {
 				}
 			}
 		}
-
 	}
 
 	if _, err := SendMessage(c.token, map[string]any{

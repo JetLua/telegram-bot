@@ -1,11 +1,5 @@
 package core
 
-type Ctx struct {
-	token string
-	Msg   *Message
-	Query *CallbackQuery
-}
-
 type Result[T any] struct {
 	Result      T      `json:"result"`
 	Ok          bool   `json:"ok"`
@@ -140,6 +134,14 @@ type InlineKeyboardMarkup struct {
 	InlineKeyboard [][]*InlineKeyboardButton `json:"inline_keyboard"`
 }
 
+func (this *InlineKeyboardMarkup) Dispose() {
+	for _, rows := range this.InlineKeyboard {
+		for _, btn := range rows {
+			btnPool.Put(btn)
+		}
+	}
+}
+
 type CallbackQuery struct {
 	Id              string   `json:"id"`
 	From            *User    `json:"from"`
@@ -171,12 +173,4 @@ type MessageEntity struct {
 
 type Recycle interface {
 	Dispose()
-}
-
-func (this *InlineKeyboardMarkup) Dispose() {
-	for _, rows := range this.InlineKeyboard {
-		for _, btn := range rows {
-			btnPool.Put(btn)
-		}
-	}
 }
